@@ -1,1 +1,23 @@
+   name: Stuff
 
+   on:
+     push:
+       branches: [ master ]
+
+   jobs:
+    build:
+      runs-on: windows-latest
+      env:
+        LIBCURL: "-lcurldll" 
+      steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+        
+      - name: Set up MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x86
+      - name: build application
+        run: ./configure CFLAGS="-O3"
+      - name: shit
+        run: make
